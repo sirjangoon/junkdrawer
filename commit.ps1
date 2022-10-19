@@ -34,12 +34,13 @@ if (-not (Test-Path $saveFolder)) {
 
 if (-not (Test-Path $filePath)) {
     Write-Host "This file does not exist: $filepath"
+    exit
 }
 
 $baseName = (Get-Item $filePath).BaseName
 $extName = (Get-Item $filePath).Extension
 
-$versionedFilePath = Join-Path -Path $saveFolder -ChildPath "$baseName $(Get-Date -format "yyyy-MM-dd HHmm")$extName"
+$versionedFilePath = Join-Path -Path $saveFolder -ChildPath "$($baseName)_$(Get-Date -format "yyyy-MM-dd_HHmm")$extName"
 Copy-Item $filePath -Destination $versionedFilePath
 
 Add-Content -Path $trackerPath $(Get-Date -Format "dddd yyyy-MM-dd HH:mm")
